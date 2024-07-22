@@ -1,45 +1,54 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
 
-/// An extension on [String] that provides a convenience method to create a [Text]
-/// widget with translation and margin support.
+/// An extension on `String?` that provides a widget displaying the translated
+/// text with various customization options.
 ///
-/// This extension method allows you to use a translated string within a [Text] widget
-/// while customizing various text properties and adding margins around the text.
+/// This extension method allows you to easily display translated text using
+/// the GetX translation utilities. It provides various parameters to customize
+/// the appearance and behavior of the text.
 ///
-/// Example:
 /// ```dart
-/// 'hello'.translatedX(
-///   style: TextStyle(fontSize: 20),
+/// String? myText = 'hello';
+/// myText.translatedX(
+///   style: TextStyle(fontSize: 16),
 ///   textAlign: TextAlign.center,
-///   topMargin: 10.0,
-///   bottomMargin: 10.0,
+///   topMargin: 8.0,
+///   bottomMargin: 8.0,
 /// );
 /// ```
 ///
-/// The following parameters can be customized:
+/// The method returns a `Container` widget that contains a `Text` widget. If
+/// the string is null or empty, and the `showPlaceholderIfEmpty` flag is not set,
+/// it returns a `Container` with no child.
+///
+/// Parameters:
+/// - `placeholder`: A fallback string to use if the original string is null.
 /// - `style`: The text style to apply to the text.
 /// - `overflow`: How visual overflow should be handled.
-/// - `maxLines`: The maximum number of lines to display.
+/// - `maxLines`: The maximum number of lines for the text to span.
 /// - `textAlign`: How the text should be aligned horizontally.
-/// - `locale`: The locale to use for translation.
-/// - `selectionColor`: The color of the selection handle.
-/// - `semanticsLabel`: A description of the text used by accessibility tools.
+/// - `locale`: The locale used to select a font when the text is drawn.
+/// - `selectionColor`: The color of the text when selected.
+/// - `semanticsLabel`: An alternative semantics label for the text.
 /// - `softWrap`: Whether the text should break at soft line breaks.
-/// - `strutStyle`: The strut style to apply to the text.
-/// - `textDirection`: The direction in which the text should be laid out.
-/// - `textHeightBehavior`: Defines how text height should be calculated.
-/// - `textScaleFactor`: Deprecated parameter for scaling text size.
-/// - `textWidthBasis`: How the width of the text should be calculated.
-/// - `textScaler`: A custom text scaler to adjust text sizes.
-/// - `topMargin`: The margin to apply at the top of the text widget.
-/// - `bottomMargin`: The margin to apply at the bottom of the text widget.
-/// - `leftMargin`: The margin to apply on the left side of the text widget.
-/// - `rightMargin`: The margin to apply on the right side of the text widget.
-///
-/// Note: The `textScaleFactor` parameter is deprecated and should be avoided.
-extension TranslatedX on String {
+/// - `strutStyle`: Strut style used for text.
+/// - `textDirection`: The directionality of the text.
+/// - `textHeightBehavior`: Defines how the paragraph's vertical height is handled.
+/// - `textScaleFactor`: The number of font pixels for each logical pixel. This parameter is deprecated.
+/// - `textWidthBasis`: Defines how to measure the width of the text.
+/// - `textScaler`: Defines the scaling behavior of the text.
+/// - `topMargin`: The top margin to apply around the text.
+/// - `bottomMargin`: The bottom margin to apply around the text.
+/// - `leftMargin`: The left margin to apply around the text.
+/// - `rightMargin`: The right margin to apply around the text.
+/// - `marginIfNull`: Whether to apply margin if the text is null.
+/// - `showPlaceholderIfEmpty`: Whether to show the placeholder if the text is empty.
+/// - `ipsumInDebug`: Whether to show 'ipsum' text in debug mode if the text is null.
+extension TranslatedX on String? {
   Widget translatedX({
+    String? placeholder,
     TextStyle? style,
     TextOverflow? overflow,
     int? maxLines,
@@ -58,14 +67,26 @@ extension TranslatedX on String {
     double bottomMargin = 0.0,
     double leftMargin = 0.0,
     double rightMargin = 0.0,
+    bool marginIfNull = false,
+    bool showPlaceholderIfEmpty = false,
+    bool ipsumInDebug = true,
   }) {
     final EdgeInsets margin =
         EdgeInsets.fromLTRB(leftMargin, topMargin, rightMargin, bottomMargin);
+    String? textToShow = this ?? placeholder;
+    if (kDebugMode && textToShow == null && ipsumInDebug) textToShow = 'ipsum';
+
+    if ((textToShow == null || textToShow.isEmpty) && !showPlaceholderIfEmpty) {
+      return Container(
+        margin: marginIfNull ? margin : null,
+        child: const SizedBox.shrink(),
+      );
+    }
 
     return Container(
       margin: margin,
       child: Text(
-        tr,
+        textToShow!.tr,
         locale: locale,
         maxLines: maxLines,
         overflow: overflow,

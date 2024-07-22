@@ -1,6 +1,6 @@
 # translated_x
 
-`translated_x` is a Dart library that provides an extension on the `String` class for easy translation and customization of text widgets in Flutter applications. It simplifies the creation of `Text` widgets with translation capabilities and customizable margins.
+`translated_x` is a Dart library that provides an extension on the `String?` class for easy translation and customization of text widgets in Flutter applications. It simplifies the creation of `Text` widgets with translation capabilities and customizable margins.
 
 > This Library is  designed and tested only on get (getx state management) translation
 
@@ -52,25 +52,30 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-# Parameters
-1. style: The text style to apply to the text.
-1. overflow: How visual overflow should be handled.
-1. maxLines: The maximum number of lines to display.
-1. textAlign: How the text should be aligned horizontally.
-1. locale: The locale to use for translation.
-1. selectionColor: The color of the selection handle.
-1. semanticsLabel: A description of the text used by accessibility tools.
-1. softWrap: Whether the text should break at soft line breaks.
-1. strutStyle: The strut style to apply to the text.
-1. textDirection: The direction in which the text should be laid out.
-1. textHeightBehavior: Defines how text height should be calculated.
-1. textScaleFactor: Deprecated parameter for scaling text size.
-1. textWidthBasis: How the width of the text should be calculated.
-1. textScaler: A custom text scaler to adjust text sizes.
-1. topMargin: The margin to apply at the top of the text widget.
-1. bottomMargin: The margin to apply at the bottom of the text widget.
-1. leftMargin: The margin to apply on the left side of the text widget.
-1. rightMargin: The margin to apply on the right side of the text widget.
+# Parameters:
+1.  `placeholder`: A fallback string to use if the original string is null.
+1.  `style`: The text style to apply to the text.
+1.  `overflow`: How visual overflow should be handled.
+1.  `maxLines`: The maximum number of lines to display.
+1.  `textAlign`: How the text should be aligned horizontally.
+1.  `locale`: The locale to use for translation.
+1.  `selectionColor`: The color of the selection handle.
+1.  `semanticsLabel`: A description of the text used by accessibility tools.
+1.  `softWrap`: Whether the text should break at soft line breaks.
+1.  `strutStyle`: The strut style to apply to the text.
+1.  `textDirection`: The direction in which the text should be laid out.
+1.  `textHeightBehavior`: Defines how text height should be calculated.
+1.  `textScaleFactor`: Deprecated parameter for scaling text size.
+1.  `textWidthBasis`: How the width of the text should be calculated.
+1.  `textScaler`: A custom text scaler to adjust text sizes.
+1.  `topMargin`: The margin to apply at the top of the text widget.
+1.  `bottomMargin`: The margin to apply at the bottom of the text widget.
+1.  `leftMargin`: The margin to apply on the left side of the text widget.
+1.  `rightMargin`: The margin to apply on the right side of the text widget.
+1.  `marginIfNull`: Whether to apply margin if the text is null.
+1.  `showPlaceholderIfEmpty`: Whether to show the placeholder if the text is empty.
+1.  `ipsumInDebug`: Whether to show 'ipsum' text in debug mode if the text is null.
+extension TranslatedX on String? 
 
 > Note: The textScaleFactor parameter is deprecated and should be avoided.
 
