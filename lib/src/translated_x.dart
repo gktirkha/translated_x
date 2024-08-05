@@ -74,7 +74,9 @@ extension TranslatedX on String? {
     final EdgeInsets margin =
         EdgeInsets.fromLTRB(leftMargin, topMargin, rightMargin, bottomMargin);
     String? textToShow = this ?? placeholder;
-    if (kDebugMode && textToShow == null && ipsumInDebug) textToShow = 'ipsum';
+    if (kDebugMode &&
+        (textToShow == null || textToShow.isEmpty) &&
+        ipsumInDebug) textToShow = 'ipsum';
 
     if ((textToShow == null || textToShow.isEmpty) && !showPlaceholderIfEmpty) {
       return Container(
